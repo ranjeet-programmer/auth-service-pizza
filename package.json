@@ -9,6 +9,8 @@
   "author": "Ranjeet Hinge",
   "license": "ISC",
   "devDependencies": {
-    "nodemon": "^3.1.0"
+    "@types/node": "^20.12.7",
+    "nodemon": "^3.1.0",
+    "typescript": "^5.4.5"
   }
 }
