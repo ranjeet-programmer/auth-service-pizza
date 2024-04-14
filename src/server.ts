@@ -1,5 +1,5 @@
-const login = (username: string): boolean => {
-    return true;
+const login = (username: string): string => {
+    return username;
 };
 
 login('ranjeet');
