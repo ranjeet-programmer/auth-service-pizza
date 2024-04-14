@@ -9,10 +9,10 @@
     ],
     "parserOptions": {
       "project": true,
-      "tsconfigRootDir": "__dirname"
+      "tsconfigRootDir": "__dirname"    
     },
     "rules": {
-        // "no-console": "off"
+        "no-console": "error"
     }
   }
   
