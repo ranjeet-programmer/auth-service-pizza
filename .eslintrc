@@ -7,7 +7,6 @@
       "plugin:@typescript-eslint/eslint-recommended",
       "prettier"
     ],
-    "files": ["*.ts", "*.tsx"],
     "parserOptions": {
       "project": true,
       "tsconfigRootDir": "__dirname"
