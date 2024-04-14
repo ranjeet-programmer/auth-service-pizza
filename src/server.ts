@@ -1,6 +1,6 @@
 const login = (username: string): string => {
     // console.log('hello');
-return username;
+    return username;
 };
 
 login('ranjeet');
