@@ -1,6 +1,2 @@
-const login = (username: string): string => {
-    // console.log('hello');
-    return username;
-};
-
-login('ranjeet');
+import { Config } from './config';
+console.log('PORT', Config.NODE_ENV);
