@@ -5,6 +5,7 @@ import authRouter from './routes/auth';
 import 'reflect-metadata';
 
 const app = express();
+app.use(express.json());
 
 app.get('/', async (req: any, res: any) => {
     res.send('welcome to auth service');
