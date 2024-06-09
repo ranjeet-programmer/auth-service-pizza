@@ -2,6 +2,7 @@ import { Repository } from 'typeorm';
 import { UserData } from '../types';
 import { User } from '../entity/User';
 import createHttpError from 'http-errors';
+import { Roles } from '../constants';
 
 export class UserService {
     // eslint-disable-next-line no-unused-vars
@@ -14,6 +15,7 @@ export class UserService {
                 lastName,
                 email,
                 password: password,
+                role: Roles.customer,
             });
         } catch (err) {
             const error = createHttpError(
