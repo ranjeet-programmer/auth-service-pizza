@@ -2,6 +2,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { UserService } from '../services/UserService';
 import { Logger } from 'winston';
+import { validationResult } from 'express-validator';
 
 interface UserData {
     firstName: string;
@@ -23,7 +24,15 @@ export class AuthController {
         res: Response,
         next: NextFunction,
     ) {
+        // validation using express-validator
+        const result = validationResult(req);
+        if (!result.isEmpty()) {
+            return res.status(400).json({
+                errors: result.array(),
+            });
+        }
         const { firstName, lastName, email, password } = req.body;
+
         this.logger.debug('New request to register a user', {
             firstName,
             lastName,
