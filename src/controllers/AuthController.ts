@@ -17,8 +17,16 @@ export class AuthController {
 
         const userRepository = AppDataSource.getRepository(User);
 
-        await userRepository.save({ firstName, lastName, email, password });
+        const user = await userRepository.save({
+            firstName,
+            lastName,
+            email,
+            password,
+        });
+        console.log('user', user);
 
-        res.status(201).json();
+        res.status(201).json({
+            id: user.id,
+        });
     }
 }
