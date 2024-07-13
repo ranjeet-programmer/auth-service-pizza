@@ -1,8 +1,12 @@
 /* eslint-disable no-unused-vars */
+import fs from 'fs';
 import { NextFunction, Request, Response } from 'express';
 import { UserService } from '../services/UserService';
 import { Logger } from 'winston';
 import { validationResult } from 'express-validator';
+import { JwtPayload, SignOptions, sign } from 'jsonwebtoken';
+import path from 'path';
+import createHttpError from 'http-errors';
 
 interface UserData {
     firstName: string;
@@ -51,7 +55,32 @@ export class AuthController {
                 id: user.id,
             });
 
-            const accessToken = 'sdfjdsjfdkfjds';
+            let privatekey: Buffer;
+
+            try {
+                privatekey = fs.readFileSync(
+                    path.join(__dirname, '../../certs/private.pem'),
+                );
+            } catch (err) {
+                const error = createHttpError(
+                    500,
+                    'Error while reading private key',
+                );
+                next(error);
+                return;
+            }
+
+            const payload: JwtPayload = {
+                sub: String(user.id),
+                role: user.role,
+            };
+            const options: SignOptions = {
+                algorithm: 'RS256',
+                expiresIn: '1h',
+                issuer: 'auth-service',
+            };
+
+            const accessToken = sign(payload, privatekey, options);
             const refreshToken = 'dfksdhjfdsfds';
 
             res.cookie('accessToken', accessToken, {

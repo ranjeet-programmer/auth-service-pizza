@@ -133,3 +133,4 @@ dist
 .pnp.*
 
 package-lock.json
+certs
