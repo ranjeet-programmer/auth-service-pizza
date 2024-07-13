@@ -51,6 +51,23 @@ export class AuthController {
                 id: user.id,
             });
 
+            const accessToken = 'sdfjdsjfdkfjds';
+            const refreshToken = 'dfksdhjfdsfds';
+
+            res.cookie('accessToken', accessToken, {
+                domain: 'localhost',
+                sameSite: 'strict',
+                maxAge: 1000 * 60 * 60, // 1hr
+                httpOnly: true,
+            });
+
+            res.cookie('refreshToken', refreshToken, {
+                domain: 'localhost',
+                sameSite: 'strict',
+                maxAge: 1000 * 60 * 60 * 24 * 365, // 1year
+                httpOnly: true,
+            });
+
             res.status(201).json({
                 id: user.id,
             });
