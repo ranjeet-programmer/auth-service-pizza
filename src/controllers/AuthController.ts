@@ -8,6 +8,8 @@ import { JwtPayload, SignOptions, sign } from 'jsonwebtoken';
 import path from 'path';
 import createHttpError from 'http-errors';
 import { Config } from '../config/index';
+import { AppDataSource } from '../config/data-source';
+import { RefreshToken } from '../entity/RefreshToken';
 
 interface UserData {
     firstName: string;
@@ -82,10 +84,22 @@ export class AuthController {
             };
 
             const accessToken = sign(payload, privatekey, options);
+
+            // store the refresh token to db
+
+            const MS_IN_YEARS = 1000 * 60 * 60 * 24 * 365;
+            const refreshTokenRepoistory =
+                AppDataSource.getRepository(RefreshToken);
+            const newRefreshToken = await refreshTokenRepoistory.save({
+                user: user,
+                expiresAt: new Date(Date.now() + MS_IN_YEARS),
+            });
+
             const refreshToken = sign(payload, Config.REFRESH_TOKEN_SECRET!, {
                 algorithm: 'HS256',
                 expiresIn: '1y',
                 issuer: 'auth-service',
+                jwtid: String(newRefreshToken.id),
             });
 
             res.cookie('accessToken', accessToken, {
@@ -100,6 +114,7 @@ export class AuthController {
                 sameSite: 'strict',
                 maxAge: 1000 * 60 * 60 * 24 * 365, // 1year
                 httpOnly: true,
+                secure: true,
             });
 
             res.status(201).json({
