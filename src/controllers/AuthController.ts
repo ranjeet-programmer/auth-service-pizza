@@ -1,3 +1,4 @@
+
 /* eslint-disable no-unused-vars */
 import { NextFunction, Request, Response } from 'express';
 import { UserService } from '../services/UserService';
@@ -9,6 +10,7 @@ import { RefreshToken } from '../entity/RefreshToken';
 import { TokenService } from '../services/TokenService';
 import createHttpError from 'http-errors';
 import { CredentialService } from '../services/CredentialService';
+import { AuthRequest } from '../types';
 
 interface UserData {
     firstName: string;
@@ -148,7 +150,7 @@ export class AuthController {
             const newRefreshToken = await this.tokenService.persistRefreshToken(user);
             const refreshToken = this.tokenService.generateRefreshToken({
                 ...payload,
-                id: String(user.id),
+                id: String(newRefreshToken.id),
             });
 
             res.cookie("accessToken",accessToken,{
@@ -174,6 +176,10 @@ export class AuthController {
             next(error);
             return;
         }
+    }
 
+    async self(req:AuthRequest,res:Response) {
+        const user = await this.userService.findById(Number(req.auth.sub));
+        return res.json(user);
     }
 }

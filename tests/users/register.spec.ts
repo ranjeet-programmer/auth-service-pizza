@@ -328,7 +328,6 @@ describe('POST /auth/register', () => {
                 password: 'pass',
                 role: 'customer',
             };
-
             await request(app).post('/auth/register').send(userData);
             const userRepository = connection.getRepository(User);
             const users = await userRepository.find();
