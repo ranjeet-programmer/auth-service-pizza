@@ -1,20 +1,21 @@
 {
-    "root": true,
-    "parser": "@typescript-eslint/parser",
-    "plugins": ["@typescript-eslint"],
-    "extends": [
-      "eslint:recommended",
-      "plugin:@typescript-eslint/eslint-recommended",
-      "prettier"
-    ],
-    "parserOptions": {
-      "project": true,
-      "tsconfigRootDir": "__dirname"    
-    },
-    "rules": {
-        // "no-console": "error"
-        "@typescript-eslint/no-misused-promises": "off",
-        "@typescript-eslint/require-await": "off"
-    }
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "prettier"
+  ],
+  "env": {
+    "node": true,
+  },
+  "parserOptions": {
+    "project": true,
+    "tsconfigRootDir": "__dirname"
+  },
+  "rules": {
+    "@typescript-eslint/no-misused-promises": "off",
+    "@typescript-eslint/require-await": "off"
   }
-  
+}
